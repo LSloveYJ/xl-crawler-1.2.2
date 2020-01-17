@@ -50,7 +50,6 @@ public class XxlCrawlerTest07 {
                         } else {
                             logger.info("商品价格（JS动态渲染方式获取）: 获取失败");
                         }
-
                     }
                 })
                 .build();

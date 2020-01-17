@@ -25,7 +25,7 @@ public class Test01 {
         private List<String> ip;
 
 
-        @PageFieldSelect(cssQuery = ".ip .port",selectType = XxlCrawlerConf.SelectType.ATTR, selectVal = "class")
+        @PageFieldSelect(cssQuery = ".ip .port", selectType = XxlCrawlerConf.SelectType.ATTR, selectVal = "class")
         private String port;
 
 

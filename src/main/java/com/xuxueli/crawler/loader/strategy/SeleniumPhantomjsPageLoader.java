@@ -1,5 +1,6 @@
 package com.xuxueli.crawler.loader.strategy;
 
+import com.xuxueli.crawler.conf.XxlCrawlerConf;
 import com.xuxueli.crawler.loader.PageLoader;
 import com.xuxueli.crawler.model.PageRequest;
 import com.xuxueli.crawler.util.UrlUtil;
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * "selenisum + phantomjs" page loader
- *
+ * <p>
  * // TODO, selenium not support feature like : paramMap、headerMap、userAgent、referrer、ifPost
  *
  * @author xuxueli 2018-10-16
@@ -28,6 +29,7 @@ public class SeleniumPhantomjsPageLoader extends PageLoader {
     private static Logger logger = LoggerFactory.getLogger(SeleniumPhantomjsPageLoader.class);
 
     private String driverPath;
+
     public SeleniumPhantomjsPageLoader(String driverPath) {
         this.driverPath = driverPath;
     }
@@ -44,7 +46,7 @@ public class SeleniumPhantomjsPageLoader extends PageLoader {
         dcaps.setCapability(CapabilityType.TAKES_SCREENSHOT, false);
         dcaps.setCapability(CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
         dcaps.setJavascriptEnabled(true);
-        if (driverPath!=null && driverPath.trim().length()>0) {
+        if (driverPath != null && driverPath.trim().length() > 0) {
             dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, driverPath);
         }
 
@@ -54,6 +56,8 @@ public class SeleniumPhantomjsPageLoader extends PageLoader {
             System.setProperty("http.nonProxyHosts", "localhost");
             dcaps.setCapability(CapabilityType.PROXY, pageRequest.getProxy());
         }
+        // 设置UserAgent
+        dcaps.setCapability("phantomjs.page.settings.userAgent", XxlCrawlerConf.USER_AGENT_CHROME);
 
         /*dcaps.setBrowserName(BrowserType.CHROME);
         dcaps.setVersion("70");
@@ -66,7 +70,7 @@ public class SeleniumPhantomjsPageLoader extends PageLoader {
             webDriver.get(pageRequest.getUrl());
 
             if (pageRequest.getCookieMap() != null && !pageRequest.getCookieMap().isEmpty()) {
-                for (Map.Entry<String, String> item: pageRequest.getCookieMap().entrySet()) {
+                for (Map.Entry<String, String> item : pageRequest.getCookieMap().entrySet()) {
                     webDriver.manage().addCookie(new Cookie(item.getKey(), item.getValue()));
                 }
             }

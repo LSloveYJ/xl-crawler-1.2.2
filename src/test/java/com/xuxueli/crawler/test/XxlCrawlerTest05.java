@@ -78,6 +78,7 @@ public class XxlCrawlerTest05 {
                             return;
                         }
                         Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(pageVo.getIp(), pageVo.getPort()));
+                        // 检测代理池
                         if (ProxyIpUtil.checkProxy(proxy, null) == 200) {
                             proxyPool.add(pageVo);
                             logger.info("proxy pool size : {}, new proxy: {}", proxyPool.size(), pageVo);
